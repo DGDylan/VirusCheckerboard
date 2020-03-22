@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Dylan Rambarran">
+    <meta name="description" content="Exam #1 Coding Assignment">
+    <title>Dylan Rambarran - Exam #1 Coding Assignment</title>
+</head>
+
+<body style="width: 100%; text-align: center;">
+    <form style="padding: 1em;">
+        <label id="form" for="n">Width: </label>
+        <input type="number" id="n" name="n" min="1" max="9">
+        <label id="form" for="n1">Height: </label>
+        <input type="number" id="n1" name="n1" min="1" max="9">
+        <input type="button" value="Build" onclick="createTable(); this.onclick=null;">
+    </form>
+
+    <div id = "CureBox" style = "padding-left: 1em;">
+        <label for="CureMode">Cure Mode: </label>
+        <input type="checkbox" id="CureMode">
+    </div>
+
+    <div id="tbl" style="padding-top:1em; padding-bottom: 1em; display: inline-block; margin: 0 auto">
+        <table id="checkerboard" style="text-align: center; font-size: 32px; color: black;" border="1px"> </table>
+
+    </div>
+
+    <h1 style="font-size: 12px; padding-left: 1em;">(Refresh to reset board)</h1>
+
+    <script>
+        function createTable() {
+            row = document.getElementById("n1").value;
+            col = document.getElementById("n").value;
+
+            for(var r = 0; r < parseInt(row); r++) {
+                var x = document.getElementById('checkerboard').insertRow(r);
+                    for(var c = 0; c < parseInt(col); c++) {
+                        var y = x.insertCell(c);
+                        y.style.width="40px";
+                        y.style.height="40px";
+                        y.setAttribute("id", `${r + 1}${c + 1}`);
+                        y.addEventListener("click", populateVirus);
+                        if((r + c) % 2 == 0) {
+                            y.style.backgroundColor="yellow";
+                        }
+                        else {
+                            y.style.backgroundColor="red";
+                        }
+
+                        if(r == c) {
+                            y.innerHTML = "V";
+                        }
+                    }
+            }
+        }
+
+        function populateVirus(e) {
+            row = document.getElementById("n1").value;
+            col = document.getElementById("n").value;
+            if(document.getElementById("CureMode").checked == true) {
+                e.target.innerHTML = "";
+            }
+
+            else {
+                if(e.target.innerText == "V") {
+                    var up = parseInt(e.target.id) - 10;
+                    var down = parseInt(e.target.id) + 10;  
+                    var left = parseInt(e.target.id) - 1;
+                    var right = parseInt(e.target.id) + 1;
+
+                    document.getElementById(up).innerHTML = "V";
+                    document.getElementById(down).innerHTML = "V";
+                    document.getElementById(left).innerHTML = "V";
+                    document.getElementById(right).innerHTML = "V";
+                }
+            }
+        }
+    </script>
+
+</body>
+
+</html>
